@@ -37,13 +37,15 @@ public class IdentityUserManager(
         ThrowIfDisposed();
         var refreshTokenStore = GetAuthenticationRefreshTokenStore();
 
-        // Remove existing refresh token and expiry
-        await refreshTokenStore.RemoveRefreshTokenAsync(user).ConfigureAwait(false);
-        await refreshTokenStore.RemoveRefreshTokenExpiryAsync(user).ConfigureAwait(false);
+        //// Remove existing refresh token and expiry
+        //await refreshTokenStore.RemoveRefreshTokenAsync(user).ConfigureAwait(false);
+        //await refreshTokenStore.RemoveRefreshTokenExpiryAsync(user).ConfigureAwait(false);
+        //await UpdateUserAsync(user).ConfigureAwait(false);
 
         // Set new refresh token and expiry
         await refreshTokenStore.SetRefreshTokenAsync(user, refreshToken).ConfigureAwait(false);
         await refreshTokenStore.SetRefreshTokenExpiryAsync(user, expiryDate).ConfigureAwait(false);
+        await UpdateUserAsync(user).ConfigureAwait(false);
     }
 
     public async Task<bool> ValidateRefreshTokenAsync(ApplicationIdentityUser user, string refreshToken)
